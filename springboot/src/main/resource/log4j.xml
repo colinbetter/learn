@@ -11,8 +11,8 @@
         <Console name="Console" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
-        <RollingFile name="daily-file-log" fileName="log/oasis-front-admin.log"
-                     filePattern="log/oasis-front-admin-%d{yyyy-MM-dd}.log">
+        <RollingFile name="daily-file-log" fileName="log/learn-springboot.log"
+                     filePattern="log/learn-springboot-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <pattern>${FILE_LOG_PATTERN}</pattern>
             </PatternLayout>
