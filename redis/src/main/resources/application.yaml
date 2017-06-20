@@ -1,0 +1,20 @@
+spring:
+  # HTTP ENCODING
+  http:
+    encoding.charset: UTF-8
+    encoding.enable: true
+    encoding.force: true
+  redis:
+    cluster:
+      nodes:
+        - 10.1.6.5:6379
+        - 10.1.6.5:6380
+        - 10.1.6.5:6381
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      maxIdle: 8
+      minIdle: 0
+      maxActive: 10
+server:
+  port: 8089

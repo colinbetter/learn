@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option optimize_for = SPEED;
+option java_package = "com.hx.calculator";
+option java_outer_classname = "CalculatorProto";
+option objc_class_prefix = "HLW";
+
+package com.hx.calculator;
+
+// The greeting service definition.
+service SimpleCalculator {
+    // Sends a greeting
+    rpc add (BinaryOperationRequest) returns (BinaryOperationReply) {
+    }
+    rpc minus (BinaryOperationRequest) returns (stream BinaryOperationReply) {
+    }
+    rpc multiply (stream BinaryOperationRequest) returns (BinaryOperationReply) {
+    }
+    rpc divide (stream BinaryOperationRequest) returns (stream  BinaryOperationReply) {
+    }
+}
+
+// The request message containing the user's name.
+message BinaryOperationRequest {
+    sint32 number1 = 1;
+    sint32 number2 = 2;
+}
+
+// The response message containing the greetings
+message BinaryOperationReply {
+    sint32 result = 1;
+}
