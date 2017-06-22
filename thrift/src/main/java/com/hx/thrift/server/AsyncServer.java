@@ -18,19 +18,21 @@ import org.slf4j.LoggerFactory;
  * Created by colin on 17-6-20.
  */
 public class AsyncServer {
-    private static final Logger LOG= LoggerFactory.getLogger(AsyncServer.class);
-    private static final int SERVER_PORT=8090;
-    public static void main(String[] args){
+    private static final Logger LOG = LoggerFactory.getLogger(AsyncServer.class);
+    private static final int SERVER_PORT = 8090;
+
+    public static void main(String[] args) {
         startTThreadedSelectorServer();
     }
-    public static void startTNonblockingServer(){
+
+    public static void startTNonblockingServer() {
         AdditionService.AsyncProcessor asyncProcessor =
                 new AdditionService.AsyncProcessor(new AsyncAdditionServiceImpl());
-        TNonblockingServerSocket serverTransport=null;
+        TNonblockingServerSocket serverTransport = null;
         try {
             serverTransport = new TNonblockingServerSocket(SERVER_PORT);
         } catch (TTransportException e) {
-            LOG.error("can not create TNonblockingServerSocket for "+e.getMessage(),e);
+            LOG.error("can not create TNonblockingServerSocket for " + e.getMessage(), e);
             return;
         }
         TNonblockingServer.Args tArgs = new TNonblockingServer.Args(serverTransport);
@@ -44,24 +46,25 @@ public class AsyncServer {
         LOG.info("AsyncServer start....");
         server.serve(); // 启动服务
     }
-    public static void startTThreadedSelectorServer(){
+
+    public static void startTThreadedSelectorServer() {
         AdditionService.AsyncProcessor asyncProcessor =
                 new AdditionService.AsyncProcessor(new AsyncAdditionServiceImpl());
-        TNonblockingServerSocket serverTransport=null;
+        TNonblockingServerSocket serverTransport = null;
         try {
             serverTransport = new TNonblockingServerSocket(SERVER_PORT);
         } catch (TTransportException e) {
-            LOG.error("can not create TNonblockingServerSocket for "+e.getMessage(),e);
+            LOG.error("can not create TNonblockingServerSocket for " + e.getMessage(), e);
             return;
         }
-        TThreadedSelectorServer.Args args=new TThreadedSelectorServer.Args(serverTransport);
+        TThreadedSelectorServer.Args args = new TThreadedSelectorServer.Args(serverTransport);
         args.processor(asyncProcessor);
         args.protocolFactory(new TCompactProtocol.Factory());
         args.transportFactory(new TFramedTransport.Factory());
         args.selectorThreads(5);
         args.workerThreads(5);
         args.executorService(Executors.newCachedThreadPool());
-        TThreadedSelectorServer server=new TThreadedSelectorServer(args);
+        TThreadedSelectorServer server = new TThreadedSelectorServer(args);
         LOG.info("TThreadedSelectorServer start....");
         server.serve();
     }

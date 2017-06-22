@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Created by colin on 17-6-20.
- *
+ * <p>
  * AsyncProcessor了继承了TBaseAsyncProcessor，TBaseAsyncProcessor实现了TProcessor接口，
  * 所以TMultiplexedProcessor在调用registerProcessor注册AsyncProcessor不会报错。
  * 由于TMultiplexedProcessor在处理请求时只调用了TProcessor的process方法，AsyncProcessor没用重写这个
@@ -24,21 +24,23 @@ import org.slf4j.LoggerFactory;
  * TMultiplexedProcessor不能注册AsyncProcessor
  */
 public class AsyncMultiServer {
-    private static final Logger LOG= LoggerFactory.getLogger(AsyncMultiServer.class);
-    private static final int SERVER_PORT=8090;
-    public static void main(String[] args){
+    private static final Logger LOG = LoggerFactory.getLogger(AsyncMultiServer.class);
+    private static final int SERVER_PORT = 8090;
+
+    public static void main(String[] args) {
         startTThreadedSelectorServer();
     }
-    public static void startTNonblockingServer(){
-        TMultiplexedProcessor multiplexedProcessor=new TMultiplexedProcessor();
+
+    public static void startTNonblockingServer() {
+        TMultiplexedProcessor multiplexedProcessor = new TMultiplexedProcessor();
         AdditionService.AsyncProcessor asyncProcessor =
                 new AdditionService.AsyncProcessor(new AsyncAdditionServiceImpl());
-        multiplexedProcessor.registerProcessor("additionService",asyncProcessor);
-        TNonblockingServerSocket serverTransport=null;
+        multiplexedProcessor.registerProcessor("additionService", asyncProcessor);
+        TNonblockingServerSocket serverTransport = null;
         try {
             serverTransport = new TNonblockingServerSocket(SERVER_PORT);
         } catch (TTransportException e) {
-            LOG.error("can not create TNonblockingServerSocket for "+e.getMessage(),e);
+            LOG.error("can not create TNonblockingServerSocket for " + e.getMessage(), e);
             return;
         }
         TNonblockingServer.Args tArgs = new TNonblockingServer.Args(serverTransport);
@@ -52,26 +54,27 @@ public class AsyncMultiServer {
         LOG.info("AsyncServer start....");
         server.serve(); // 启动服务
     }
-    public static void startTThreadedSelectorServer(){
-        TMultiplexedProcessor multiplexedProcessor=new TMultiplexedProcessor();
+
+    public static void startTThreadedSelectorServer() {
+        TMultiplexedProcessor multiplexedProcessor = new TMultiplexedProcessor();
         AdditionService.AsyncProcessor asyncProcessor =
                 new AdditionService.AsyncProcessor(new AsyncAdditionServiceImpl());
-        TNonblockingServerSocket serverTransport=null;
-        multiplexedProcessor.registerProcessor("additionService",asyncProcessor);
+        TNonblockingServerSocket serverTransport = null;
+        multiplexedProcessor.registerProcessor("additionService", asyncProcessor);
         try {
             serverTransport = new TNonblockingServerSocket(SERVER_PORT);
         } catch (TTransportException e) {
-            LOG.error("can not create TNonblockingServerSocket for "+e.getMessage(),e);
+            LOG.error("can not create TNonblockingServerSocket for " + e.getMessage(), e);
             return;
         }
-        TThreadedSelectorServer.Args args=new TThreadedSelectorServer.Args(serverTransport);
+        TThreadedSelectorServer.Args args = new TThreadedSelectorServer.Args(serverTransport);
         args.processor(multiplexedProcessor);
         args.protocolFactory(new TCompactProtocol.Factory());
         args.transportFactory(new TFramedTransport.Factory());
         args.selectorThreads(5);
         args.workerThreads(5);
         args.executorService(Executors.newCachedThreadPool());
-        TThreadedSelectorServer server=new TThreadedSelectorServer(args);
+        TThreadedSelectorServer server = new TThreadedSelectorServer(args);
         LOG.info("TThreadedSelectorServer start....");
         server.serve();
     }

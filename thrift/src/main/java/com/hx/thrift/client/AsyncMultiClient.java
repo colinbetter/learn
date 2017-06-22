@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * 客户端可以使用AsyncMultiClient和TMultiplexedProtocol相结合，但是服务端不能是AsyncProcessor和
  * TMultiplexedProcessor的结合。只能是Processor和TMultiplexedProcessor的结合，而且定义AsyncClient
  * 时要重写TProtocol.Factory的getProtocol方法，在这个方法里面将父类返回的TProtocol转换成TMultiplexedProtocol
- *
  */
 public class AsyncMultiClient {
     private static final Logger LOG = LoggerFactory.getLogger(AsyncMultiClient.class);
