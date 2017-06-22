@@ -60,5 +60,6 @@ public class AsyncClient {
             latch.await();
         } catch (InterruptedException e) {
         }
+        transport.close();
     }
 }
