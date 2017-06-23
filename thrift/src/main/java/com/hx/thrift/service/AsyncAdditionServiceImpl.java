@@ -9,17 +9,17 @@ import org.slf4j.LoggerFactory;
  * Created by testuser on 17-4-28.
  */
 public class AsyncAdditionServiceImpl implements AdditionService.AsyncIface {
-    private static final Logger LOG= LoggerFactory.getLogger(AsyncAdditionServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AsyncAdditionServiceImpl.class);
+
     @Override
     public void add(int n1, int n2, AsyncMethodCallback resultHandler) throws TException {
-
-        LOG.info("get add request:n1="+n1+",n2="+n2);
+        LOG.info("get add request :" + n1 + " + " + n2);
         resultHandler.onComplete(n1 + n2);
     }
 
     @Override
     public void difference(int n1, int n2, AsyncMethodCallback resultHandler) throws TException {
-        LOG.info("get difference request:n1="+n1+",n2="+n2);
+        LOG.info("get difference request :" + n1 + " - " + n2);
         resultHandler.onComplete(n1 - n2);
     }
 }
