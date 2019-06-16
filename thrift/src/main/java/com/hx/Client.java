@@ -7,11 +7,7 @@ import org.apache.thrift.async.TAsyncClientManager;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TFramedTransport;
-import org.apache.thrift.transport.TNonblockingSocket;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
+import org.apache.thrift.transport.*;
 
 import java.io.IOException;
 
@@ -95,16 +91,12 @@ public class Client {
         }
         ;
         transport.open();
-        client.add(1, 2, new AsyncMethodCallback<Object>() {
+        client.add(1, 2, new AsyncMethodCallback<Integer>() {
             @Override
-            public void onComplete(Object response) {
-                if (response instanceof AdditionService.AsyncClient.add_call) {
-                    AdditionService.AsyncClient.add_call result = (AdditionService.AsyncClient.add_call) response;
-                    try {
-                        System.out.println("result : " + result.getResult());
-                    } catch (TException e) {
-                        e.printStackTrace();
-                    }
+            public void onComplete(Integer response) {
+                if (response instanceof Integer) {
+                    Integer result = (Integer) response;
+                    System.out.println("result : " + result);
                 }
                 transport.close();
             }

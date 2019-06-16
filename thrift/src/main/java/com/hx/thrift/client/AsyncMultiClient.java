@@ -46,14 +46,12 @@ public class AsyncMultiClient {
         }
 
         try {
-            client.add(100, 200, new AsyncMethodCallback<add_call>() {
+            client.add(100, 200, new AsyncMethodCallback<Integer>() {
                 @Override
-                public void onComplete(AdditionService.AsyncClient.add_call response) {
-                    AdditionService.AsyncClient.add_call result = (AdditionService.AsyncClient.add_call) response;
+                public void onComplete(Integer response) {
+                    Integer result = (Integer) response;
                     try {
-                        LOG.info("get correct response from server:" + result.getResult());
-                    } catch (TException e) {
-                        LOG.error(e.getMessage(), e);
+                        LOG.info("get correct response from server:" + result);
                     } finally {
                         latch.countDown();
                     }
