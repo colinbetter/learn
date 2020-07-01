@@ -25,7 +25,7 @@
         <junit.verison>4.12</junit.verison>
         <jedis.version>2.9.0</jedis.version>
         <mybatis.springboot.version>1.2.0</mybatis.springboot.version>
-        <mysql.version>6.0.4</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <c3p0.version>0.9.5.2</c3p0.version>
         <cglib.version>3.2.4</cglib.version>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
