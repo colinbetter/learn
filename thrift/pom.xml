@@ -19,7 +19,7 @@
         <compiler-plugin.version>3.6.1</compiler-plugin.version>
         <java.version>1.8</java.version>
         <slf4j.version>1.7.22</slf4j.version>
-        <log4j2.version>2.7</log4j2.version>
+        <log4j2.version>2.15.0</log4j2.version>
     </properties>
 
     <dependencies>
